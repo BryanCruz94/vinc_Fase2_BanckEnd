@@ -1,7 +1,6 @@
 import Encuesta from '../models/encuesta.model'
 
 export const registrarEncuesta = async (req, res) => {
-    console.log(req.body);
     if (req.body.usuario == "") {
         return res.status(200).send();
     };

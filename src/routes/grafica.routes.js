@@ -27,6 +27,8 @@ router.get('/unidadesEducativas', GraficaCtrl_F2.getUnidadesEducativas_F2); // O
 router.get('/anios_UE_F2', GraficaCtrl_F2.getAnios_UE_F2); // Obtener años existentes UE
 router.get('/anios_911_F2', GraficaCtrl_F2.getAnios_911_F2);// Obtener años existentes eCU911
 
+router.get('/meses_UE_F2?', GraficaCtrl_F2.getMeses_UE_F2); // Obtener meses existentes UE
+
 router.get('/incidentes_F2', GraficaCtrl_F2.getCountTipoInciendente911_F2); // Ruta para obtener los incidentes en unidades educativas
 router.get('/incidentesUE_F2', GraficaCtrl_F2.getCountTipoInciendente_UE_F2); // Ruta para obtener los incidentes en unidades educativas
 

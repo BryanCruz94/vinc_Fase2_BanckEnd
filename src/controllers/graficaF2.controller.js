@@ -7,6 +7,7 @@ import Encuesta from "../models/encuestas_F2.model";
 // CONTAR LLAMADOS A ECU911 POR PARTE DE ESTUDIANTES
 const countIncidents911_F2 = async (query) => {
     const encuestas = await Encuesta.find(query);
+    console.log('Se realiza peticion de ecu911');
 
     let roboCount = 0;
     let secuestroCount = 0;
@@ -238,19 +239,21 @@ export const getUnidadesEducativas_F2 = async (req, res) => {
 // ******************************************************************
 const countIncidents_UE_F2 = async (query) => {
     const encuestas = await Encuesta.find(query);
-    console.log(encuestas);
-    console.log('dsad');
+    
+    //console.log(encuestas);
+    console.log('Se realiza peticion de unidades educativas');
 
     let roboCount = 0;
     let acosoSexualCount = 0;
     let bullyngCount = 0;
     let alcoholDrogasCount = 0;
     let violenciaParesCount = 0;
+    let pandillasCount = 0;
     let otrosCount = 0;
     let sinIncidentesCount = 0; // Nuevo contador para 'Sin Incidentes'
 
     encuestas.forEach((encuesta) => {
-        console.log(encuesta.encuesta.F2_S1_P3);
+       // console.log(encuesta.encuesta.F2_S1_P3);
         switch (encuesta.encuesta.F2_S1_P3) {
             case 'Robo':
                 roboCount++;
@@ -277,6 +280,9 @@ const countIncidents_UE_F2 = async (query) => {
                 break;
 
         }
+        if ((encuesta.encuesta.F2_S5_P1)==='Sí') {
+            pandillasCount++;
+        }
     });
 
     const totalIncidents = encuestas.length;
@@ -295,6 +301,7 @@ const countIncidents_UE_F2 = async (query) => {
         violenciaPares: violenciaParesCount,
         otros: otrosCount,
         sinIncidente: sinIncidentesCount,
+        pandillas: pandillasCount,
         total: totalIncidents
 
     };
@@ -454,4 +461,30 @@ export const getAnios_UE_F2 = async (req, res) => {
         return res.status(500).json({ mensaje: 'Error al obtener conteo de incidentes' });
     }
 };
+
+//Obtener los meses existentes con filtro de sector, unidad educativa y año
+export const getMeses_UE_F2 = async (req, res) => {
+    try {
+        const sector = req.query.sector;
+        const ue = req.query.ue;
+        const year = req.query.year;
+        const query = {};
+
+        if (sector) {
+            query['encuesta. F2_P2'] = sector;
+        }
+        if (ue) {
+            query['encuesta.F2_P3'] = ue;
+        }
+        if (year) {
+            query['encuesta. F2_S2_P2_Y'] = year;
+        }
+
+        const result = await Encuesta.distinct('encuesta. F2_S2_P2_M', query);
+        return res.status(200).json(result);
+    } catch (error) {
+        //console.error(error);
+        return res.status(500).json({ mensaje: 'Error al obtener conteo de incidentes' });
+    }
+}
 

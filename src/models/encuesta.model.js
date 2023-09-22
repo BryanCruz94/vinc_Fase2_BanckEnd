@@ -1,9 +1,9 @@
-// import { Schema, model } from 'mongoose';
+import { Schema, model } from 'mongoose';
 
-// const encuestaSchema = new Schema({
-//     usuario: String,
-//     encuestado: {},
-//     encuesta: {}
-// });
+const encuestaSchema = new Schema({
+    usuario: String,
+    encuestado: {},
+    encuesta: {}
+}); 
 
-// export default model('encuestas', encuestaSchema);
+export default model('encuestas_f1', encuestaSchema); // aqui se cambia la coleccion

@@ -1,9 +1,9 @@
-import Encuesta from "../models/encuesta.model";
+import Encuesta1 from "../models/encuesta.model"; 
 
 //=================================================================================================
 const countIncidents = async (query) => {
-  const encuestas = await Encuesta.find(query);
-
+  const encuestas = await Encuesta1.find(query);
+  console.log('muestra enuestas de fase1');
   let roboCount = 0;
   let emergenciaMedicaCount = 0;
   let incendioCount = 0;
@@ -12,6 +12,7 @@ const countIncidents = async (query) => {
   let sinIncidentesCount = 0; // Nuevo contador para 'Sin Incidentes'
 
   encuestas.forEach((encuesta) => {
+    console.log(encuesta.encuesta.P1_S1_P1);
     switch (encuesta.encuesta.P1_S1_P1) {
       case 'Robo':
         roboCount++;
